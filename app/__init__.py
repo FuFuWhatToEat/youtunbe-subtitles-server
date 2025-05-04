@@ -2,6 +2,7 @@ import logging
 from logging.config import dictConfig
 from flask import Flask, request
 from flask_restx import Api
+from flask_cors import CORS
 from app.config import Config
 
 
@@ -51,6 +52,9 @@ def create_app():
     configure_logging()
 
     app = Flask(__name__)
+
+    # 配置CORS
+    CORS(app)
 
     # 配置应用
     Config.init_app(app)
