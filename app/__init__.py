@@ -53,8 +53,17 @@ def create_app():
 
     app = Flask(__name__)
 
-    # 配置CORS
-    CORS(app)
+    # 配置CORS (允许所有来源、所有方法、所有头部)
+    CORS(
+        app,
+        resources={
+            r"/subtitles*": {
+                "origins": "*",
+                "methods": ["GET", "POST", "OPTIONS"],
+                "allow_headers": ["Content-Type"],
+            }
+        },
+    )
 
     # 配置应用
     Config.init_app(app)
