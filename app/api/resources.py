@@ -1,4 +1,5 @@
 import logging
+import urllib.parse
 from flask import request
 from typing import Dict, Any, Optional, Union
 
@@ -22,11 +23,12 @@ class SubtitleExtraction(Resource):
         if not data or "url" not in data:
             return {"error": "URL is required in JSON payload"}, 400
 
-        task_id = self.scheduler.add_subtitle_task(url=data["url"])
+        decoded_url = urllib.parse.unquote(data["url"])
+        task_id = self.scheduler.add_subtitle_task(url=decoded_url)
         return {
             "task_id": task_id,
             "message": "Subtitle extraction started",
-            "url": data["url"],
+            "url": decoded_url,
         }
 
     def get(self, task_id: Optional[str] = None) -> Union[Dict[str, Any], tuple]:

@@ -14,9 +14,11 @@
 
 ```json
 {
-  "url": "YouTube视频URL"
+  "url": "URL编码后的YouTube视频URL"
 }
 ```
+
+> 注意：URL 参数需要进行 URL 编码处理
 
 **成功响应** (200 OK):
 
@@ -93,7 +95,7 @@
 ```bash
 curl -X POST http://localhost:5000/subtitles \
   -H "Content-Type: application/json" \
-  -d '{"url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"}'
+  -d '{"url": "https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DdQw4w9WgXcQ"}'
 ```
 
 2. 查询结果:
