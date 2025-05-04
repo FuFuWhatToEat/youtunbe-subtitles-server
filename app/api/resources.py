@@ -1,7 +1,8 @@
 import logging
 from flask import request
-from flask_restful import Resource
 from typing import Dict, Any, Optional, Union
+
+from flask_restx import Resource
 from app.tasks.scheduler import TaskScheduler
 
 logger = logging.getLogger(__name__)

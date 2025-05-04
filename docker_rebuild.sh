@@ -3,7 +3,7 @@ set -e
 
 IMAGE_NAME="youtube_subtitles"
 CONTAINER_NAME="youtube_subtitles_container"
-API_URL=${1:-"http://localhost:5000"} # 默认API地址
+API_URL=${1:-"http://localhost:9870"} # 默认API地址
 
 # 强制停止并删除所有同名容器
 echo "清理现有容器..."
