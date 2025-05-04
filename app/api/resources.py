@@ -12,7 +12,8 @@ task_scheduler = TaskScheduler()
 
 
 class SubtitleExtraction(Resource):
-    def __init__(self):
+    def __init__(self, api=None, *args, **kwargs):
+        super(SubtitleExtraction, self).__init__(api, *args, **kwargs)
         self.scheduler = task_scheduler
 
     def post(self) -> Union[Dict[str, Any], tuple]:
