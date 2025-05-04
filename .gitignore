@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.python-version
+.venv/
+venv/
+
+# Poetry
+poetry.lock
+
+# Logs
+logs/*.log
+
+# Downloads
+downloads/*
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temp files
+*.tmp
+*.swp
+*.swo
+
+/subtitles
