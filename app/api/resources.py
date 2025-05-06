@@ -31,6 +31,10 @@ class SubtitleExtraction(Resource):
             "url": decoded_url,
         }
 
+    def options(self, task_id: Optional[str] = None) -> Union[Dict[str, Any], tuple]:
+        """处理OPTIONS预检请求"""
+        return {"status": "ok", "message": "CORS preflight request allowed"}, 200
+
     def get(self, task_id: Optional[str] = None) -> Union[Dict[str, Any], tuple]:
         """获取字幕提取结果"""
         if task_id is None:
