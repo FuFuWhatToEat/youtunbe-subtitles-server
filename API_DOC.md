@@ -1,32 +1,35 @@
-# YouTube 字幕提取 API 文档
+# YouTube 字幕提取服务 API 文档
 
-## 概述
+## 基础信息
 
-该 API 提供 YouTube 视频字幕提取功能，支持异步任务提交和结果查询。
+- **API 根路径**: `/subtitles`
+- **Swagger 文档**: `/docs` (访问此路径查看交互式 API 文档)
+- **CORS 配置**: 允许所有来源访问，支持 GET/POST/OPTIONS 方法
+- **请求日志**: 所有请求和响应都会记录到日志中
 
-## 端点
+## 接口列表
 
 ### 1. 创建字幕提取任务
 
-**URL**: `POST /subtitles`
+**请求方法**: POST  
+**路径**: /subtitles  
+**Content-Type**: application/json
 
 **请求参数**:
 
 ```json
 {
-  "url": "URL编码后的YouTube视频URL"
+  "url": "YouTube视频URL"
 }
 ```
-
-> 注意：URL 参数需要进行 URL 编码处理
 
 **成功响应** (200 OK):
 
 ```json
 {
-  "task_id": "唯一任务ID",
+  "task_id": "唯一任务ID(也是字幕文件名)",
   "message": "Subtitle extraction started",
-  "url": "原始视频URL"
+  "url": "解码后的视频URL"
 }
 ```
 
@@ -40,32 +43,42 @@
 }
 ```
 
-### 2. 查询字幕提取结果
+**示例请求**:
 
-**URL**: `GET /subtitles/{task_id}`
+```http
+POST /subtitles HTTP/1.1
+Content-Type: application/json
+
+{
+  "url": "https://www.youtube.com/watch?v=example"
+}
+```
+
+### 2. 获取字幕提取结果
+
+**请求方法**: GET  
+**路径**: /subtitles/{task_id}
 
 **路径参数**:
 
-- `task_id`: 任务 ID
+- task_id: 任务 ID(也是字幕文件名，不带扩展名)
 
 **成功响应** (200 OK):
-
-- 任务完成:
 
 ```json
 {
   "status": "completed",
   "content": "字幕文本内容",
-  "path": "字幕文件存储路径"
+  "path": "字幕文件存储路径(格式为/subtitles/{task_id}.vtt)"
 }
 ```
 
-- 任务处理中:
+**处理中响应** (200 OK):
 
 ```json
 {
   "status": "processing",
-  "message": "任务处理中"
+  "message": "任务正在处理中"
 }
 ```
 
@@ -83,31 +96,26 @@
 
 ```json
 {
-  "status": "error",
-  "message": "Task not found"
+  "status": "not_found"
 }
 ```
 
-## 使用示例
+### 3. CORS 预检请求
 
-1. 提交任务:
+**请求方法**: OPTIONS  
+**路径**: /subtitles
 
-```bash
-curl -X POST http://localhost:5000/subtitles \
-  -H "Content-Type: application/json" \
-  -d '{"url": "https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DdQw4w9WgXcQ"}'
+**响应** (200 OK):
+
+```json
+{
+  "status": "ok",
+  "message": "CORS preflight request allowed"
+}
 ```
 
-2. 查询结果:
+## 文件命名规则
 
-```bash
-curl http://localhost:5000/subtitles/12345
-```
-
-## 错误代码
-
-| 状态码 | 描述               |
-| ------ | ------------------ |
-| 400    | 请求参数缺失或无效 |
-| 404    | 请求的资源不存在   |
-| 500    | 服务器内部错误     |
+- 所有生成的字幕文件都使用 task_id 作为文件名
+- 文件格式为 WebVTT(.vtt)
+- 存储路径为: /subtitles/{task_id}.vtt

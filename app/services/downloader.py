@@ -15,16 +15,16 @@ class DownloadService:
             f"Initialized DownloadService with output dir: {self.subtitles_dir}"
         )
 
-    def extract_subtitles(self, url: str) -> Dict[str, Any]:
+    def extract_subtitles(self, url: str, task_id: str) -> Dict[str, Any]:
         """使用yt-dlp API提取字幕"""
-        logger.info(f"Starting subtitle extraction for URL: {url}")
+        logger.info(f"Starting subtitle extraction for URL: {url}, task_id: {task_id}")
         ydl_opts = {
             "writesubtitles": True,
             "writeautomaticsub": True,
             "subtitleslangs": ["zh", "en"],
             "skip_download": True,
             "quiet": True,
-            "outtmpl": str(self.subtitles_dir / "%(id)s.%(ext)s"),
+            "outtmpl": str(self.subtitles_dir / f"{task_id}"),
         }
 
         try:
