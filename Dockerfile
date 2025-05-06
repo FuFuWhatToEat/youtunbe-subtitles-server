@@ -13,7 +13,7 @@ COPY run.py ./
 RUN pip install --no-cache-dir -r requirements.txt
 
 # 暴露端口
-EXPOSE 9870
+EXPOSE 9877
 
 # 启动命令
 CMD ["python", "run.py"]

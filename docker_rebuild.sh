@@ -27,7 +27,7 @@ docker build -t ${IMAGE_NAME} .
 echo "启动新容器..."
 docker run -d \
   --name ${CONTAINER_NAME} \
-  -p 9870:9870 \
+  -p 9877:9877 \
   -e API_BASE_URL=${API_URL} \
   ${IMAGE_NAME}
 
