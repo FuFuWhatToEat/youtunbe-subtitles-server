@@ -9,7 +9,7 @@ venv/
 poetry.lock
 
 # Logs
-logs/*.log
+logs/
 
 # Downloads
 downloads/*
